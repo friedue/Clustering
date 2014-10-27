@@ -20,17 +20,19 @@
 #/package/BEDTools-Version-2.12.0/bin/mergeBed -i AllPeaks.bed > AllPeaks_merged.bed
 ##########################################################################################################
 ### 1. signal matrix
+
+
 for CHIP in MSL1 MSL2 MOF MCRS1 NSL3
 do
-		 /package/deepTools-1.5.7/bin/computeMatrix scale-regions  -S $SIGNAL -R ${1}.bed -F bigwig  -w 50 -m 1500 --regionsLabel "peak regions" --sortRegions no --colorMap Spectral_r --missingDataAsZero -T "${CHIP}merge_mlES unclustered ${2} signal" --startLabel "peak start" --endLabel "peak end" --outFileName peakMatrix_${1}_${2}_${CHIP}merge_mlES.png --outFileNameMatrix peakMatrix_${1}_${2}_${CHIP}merge_mlES.tab
+/package/deepTools-1.5.7/bin/computeMatrix scale-regions  -S $SIGNAL -R ${1}.bed -F bigwig  -w 50 -m 1500 \
+--sortRegions no --missingDataAsZero --startLabel "peak start" --endLabel "peak end" \
+--outFileNameMatrix peakMatrix_${1}_${2}_${CHIP}merge_mlES.tab
 done
+
 #
-montage peakMatrix_${1}_${2}_MOFmerge_mlES.png peakMatrix_${1}_${2}_MSL1merge_mlES.png peakMatrix_${1}_${2}_MSL2merge_mlES.png peakMatrix_${1}_${2}_MCRS1merge_mlES.png peakMatrix_${1}_${2}_NSL3merge_mlES.png -tile x1 -geometry +0.1+0.1 peakMatrix_ChIPsignals_HMcollage_${1}_${2}.png
 paste peakMatrix_${1}_${2}_MOFmerge_mlES.tab peakMatrix_${1}_${2}_MSL1merge_mlES.tab peakMatrix_${1}_${2}_MSL2merge_mlES.tab peakMatrix_${1}_${2}_MCRS1merge_mlES.tab peakMatrix_${1}_${2}_NSL3merge_mlES.tab > peakMatrix_ALLChIPs_${1}_${2}.tab
-echo "A signal matrix was produced: peakMatrix_ALLChIPs_${1}_${2}.tab.
-The corresponding signal heatmaps are merged in peakMatrix_ChIPsignals_HMcollage.png"
-rm peakMatrix_${1}_${2}_MOFmerge_mlES.tab peakMatrix_${1}_${2}_MSL1merge_mlES.tab peakMatrix_${1}_${2}_MSL2merge_mlES.tab peakMatrix_${1}_${2}_MCRS1merge_mlES.tab peakMatrix_${1}_${2}_NSL3merge_mlES.tab
-rm peakMatrix_${1}_${2}_MOFmerge_mlES.png peakMatrix_${1}_${2}_MSL1merge_mlES.png peakMatrix_${1}_${2}_MSL2merge_mlES.png peakMatrix_${1}_${2}_MCRS1merge_mlES.png peakMatrix_${1}_${2}_NSL3merge_mlES.png
+
+
 #
 ### 2. clustering
 echo "Clustering of peakMatrix_ALLChIPs_${1}_${2}.tab with distance measure = ${3} and linkage method = ${4}"

@@ -5,6 +5,7 @@
 #       [3] linkage method; one of "ward", "single", "complete", "average", "mcquitty", "median" or "centroid"
 #       [4] what kind of signal was used for signal matrix, e.g. log2ratio or difference
 #       [5] either "new" or  an existing distance.Robj
+
 library(GMD)
 args <- commandArgs(TRUE)
 

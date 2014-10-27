@@ -23,7 +23,7 @@ if (args[4] != "new"){
       #hh.dist = hclust(distanceMM, method = args[3])
       distanceMM = as.dist(1-cor(t(as.matrix(ma)), method='pearson') )
       } else {
-        distanceMM=gdist(as.matrix(ma), method = args[2]) # 3013-03-10: changed dist() to gdist()
+        distanceMM=gdist(as.matrix(ma), method = args[2]) # 2013-03-10: changed dist() to gdist()
       }
     save(distanceMM, file=outFile_dist)
   }

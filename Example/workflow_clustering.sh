@@ -4,11 +4,11 @@
 #######################
 ## Analysis-specific parameters
 #######################
-infolder=
-outfolder=
+infolder=###!!! in this example, you could either indicate infolder=data or leave the infolder variable completely as it is clear from the folder structure where the input data can be found
+outfolder=###!!! same as for infolder, here it might make sense to indicate outfolder=results, but then again, this is so trivial that it might be left out
 scriptfolder=/data/projects/akhtar/bhardwaj/project1/Gitrepo/Clustering
-rscript=/package/R-3.1.0/bin/Rscript # this should be in your bashrc, not the script
-bedtools=/package/BEDTools/bin/bedtools # this should also be in your bashrc, not in the script
+rscript=/package/R-3.1.0/bin/Rscript ####!!!  this should be in your bashrc, not the script
+bedtools=/package/BEDTools/bin/bedtools ####!!!  this should also be in your bashrc, not in the script
 distanceMeasure=euclidean
 linkage=ward
 analysis= ###!!! this should be a unique identifier connected
@@ -33,12 +33,15 @@ done
 
 ls | grep "tab" > filenames.txt ####!!!! this needs to be more robust
 echo "rank transforming each matrix"
-${rscript} ${scriptfolder}/b_matrixProcessing.R filenames.txt ${outfolder}/processedMatrix_${analysis}
+${rscript} ${scriptfolder}/b_matrixProcessing.R \
+filenames.txt \
+${outfolder}/processedMatrix_${analysis}
 
 ## hierarchical clustering
 echo "performing the hierachical clustering"
 ${rscript} ${scriptfolder}/c_HierarchicalClustering.R \
-${outfolder}/processedMatrix_${analysis}.tab ${distanceMeasure} ${linkage} new
+${outfolder}/processedMatrix_${analysis}.tab \ # input file for hclust
+${distanceMeasure} ${linkage} new # various additional parameters for the R script
 
 ## prune the dendrogram at different levels to
 ## create clusters and produce bed files with clusters as output
